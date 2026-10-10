@@ -202,4 +202,185 @@
 
   /* ---------- The wreath grows in ---------- */
   .stem { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animation: draw 2.2s ease-out .2s forwards; }
-  .bloom
+  .bloom { opacity: 0; transform-box: fill-box; transform-origin: center; animation: bloom .7s ease-out forwards; }
+  .hero-text { opacity: 0; animation: rise 1.2s ease-out 1.6s forwards; }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  @keyframes bloom { from { opacity: 0; transform: scale(.3); } to { opacity: 1; transform: scale(1); } }
+  @keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    .stem, .bloom, .hero-text { animation: none; opacity: 1; stroke-dashoffset: 0; transform: none; }
+  }
+
+  @media (max-width: 620px) {
+    .details { grid-template-columns: 1fr; }
+    .schedule::before { left: 4.75rem; }
+    .schedule li { grid-template-columns: 4rem 1.5rem 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <svg class="wreath" id="wreath" viewBox="0 0 400 400" role="img" aria-label="A wreath of leaves, cornflowers and buttercups around the initials N and W">
+    <text x="200" y="222" text-anchor="middle" font-family="Pinyon Script, cursive" font-size="92" fill="#22304A">N<tspan font-family="Cormorant Garamond, Georgia, serif" font-style="italic" font-size="44" fill="#4F6FA8" dx="6" dy="-8">&amp;</tspan><tspan dx="6" dy="8">W</tspan></text>
+  </svg>
+
+  <div class="hero-text">
+    <h1 class="names">Nora &amp; Wictor</h1>
+    <p class="tagline">are getting married, and we would love you there</p>
+    <!-- EDIT: date and place -->
+    <p class="when-where">
+      <strong>Saturday 12 June 2027</strong>
+      Villa Björkudden, Stockholm
+    </p>
+    <a class="button" href="#rsvp">RSVP</a>
+  </div>
+</header>
+
+<main>
+  <section class="block" aria-labelledby="details-title">
+    <svg class="sprig" viewBox="0 0 70 24" aria-hidden="true"><path d="M2 12 H68" stroke="#98AE84" stroke-width="1"/><g fill="#6E8B5E"><path d="M14 12c3-6 9-7 12-6-2 4-7 7-12 6z"/><path d="M14 12c3 6 9 7 12 6-2-4-7-7-12-6z"/><path d="M56 12c-3-6-9-7-12-6 2 4 7 7 12 6z"/><path d="M56 12c-3 6-9 7-12 6 2-4 7-7 12-6z"/></g><circle cx="35" cy="12" r="4" fill="#4F6FA8"/><circle cx="35" cy="12" r="1.6" fill="#D9B44A"/></svg>
+    <h2 id="details-title">The day</h2>
+
+    <!-- EDIT: ceremony and celebration details -->
+    <div class="details">
+      <div>
+        <h3>Ceremony</h3>
+        <p class="time">14:00</p>
+        <p>Björkudden Chapel<br>Strandvägen 1, Stockholm</p>
+      </div>
+      <div>
+        <h3>Celebration</h3>
+        <p class="time">From 15:30</p>
+        <p>Villa Björkudden<br>A short walk from the chapel</p>
+      </div>
+    </div>
+
+    <p class="note">Dress for a summer garden. We'll be outside for part of the day, so bring a layer for the evening.</p>
+  </section>
+
+  <section class="block" aria-labelledby="schedule-title">
+    <h2 id="schedule-title">How the day unfolds</h2>
+    <!-- EDIT: times and events -->
+    <ol class="schedule">
+      <li><span class="t">14:00</span><span class="dot"></span><span class="what">Ceremony<span>In the chapel</span></span></li>
+      <li><span class="t">15:30</span><span class="dot"></span><span class="what">Drinks in the garden<span>Bubbles, canapés and lawn games</span></span></li>
+      <li><span class="t">18:00</span><span class="dot"></span><span class="what">Dinner<span>Speeches between courses</span></span></li>
+      <li><span class="t">21:00</span><span class="dot"></span><span class="what">Dancing<span>Until the light gives out</span></span></li>
+    </ol>
+  </section>
+
+  <section class="block rsvp-wrap" id="rsvp" aria-labelledby="rsvp-title">
+    <div class="card">
+      <h2 id="rsvp-title">Will you join us?</h2>
+      <p class="deadline">Please reply by 1 May 2027</p>
+      <p class="rsvp-text" id="rsvp-text">Let us know if you can come, who you're bringing, and anything we should know about food.</p>
+      <div class="submit-row">
+        <a class="button" id="rsvp-link" href="#" target="_blank" rel="noopener">Reply to the invitation</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span class="mono">N &amp; W</span>
+  Questions? Email us at <a href="mailto:hello@noraochwictor.com" id="footer-email">hello@noraochwictor.com</a>
+</footer>
+
+<script>
+  /* ===================== SETTINGS ===================== */
+  // Paste your Google Forms link between the quotes when it's ready,
+  // e.g. "https://forms.gle/abc123". Until then, the button says "RSVP opens soon".
+  const GOOGLE_FORM_URL = "";
+  // Your email, shown at the bottom of the page.
+  const CONTACT_EMAIL = "hello@noraochwictor.com";
+  /* ==================================================== */
+
+  const fe = document.getElementById("footer-email");
+  fe.href = "mailto:" + CONTACT_EMAIL;
+  fe.textContent = CONTACT_EMAIL;
+
+  const rsvp = document.getElementById("rsvp-link");
+  if (GOOGLE_FORM_URL) {
+    rsvp.href = GOOGLE_FORM_URL;
+  } else {
+    rsvp.textContent = "RSVP opens soon";
+    rsvp.classList.add("soon");
+    rsvp.removeAttribute("href");
+    rsvp.removeAttribute("target");
+    rsvp.setAttribute("aria-disabled", "true");
+    document.getElementById("rsvp-text").textContent = "The reply form is on its way. Check back here soon.";
+  }
+
+  // ---------- Build the wreath ----------
+  (function buildWreath() {
+    const svg = document.getElementById("wreath");
+    const NS = "http://www.w3.org/2000/svg";
+    const cx = 200, cy = 200, r = 150;
+    const start = 118, end = 422;
+    const rad = d => d * Math.PI / 180;
+    const pt = (d, rr = r) => [cx + rr * Math.cos(rad(d)), cy + rr * Math.sin(rad(d))];
+    const el = (tag, attrs) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); return e; };
+
+    const g = el("g", {});
+    svg.insertBefore(g, svg.firstChild);
+
+    // Stem
+    const [sx, sy] = pt(start), [ex, ey] = pt(end);
+    const stem = el("path", { d: `M${sx},${sy} A${r},${r} 0 1 1 ${ex},${ey}`, fill: "none", stroke: "#98AE84", "stroke-width": "1.4", class: "stem" });
+    g.appendChild(stem);
+    stem.style.setProperty("--len", stem.getTotalLength());
+
+    const total = end - start;
+    const delayFor = d => (0.25 + 2.0 * (d - start) / total).toFixed(2) + "s";
+    const leafPath = "M0,0 C5,-7 15,-8 22,0 C15,8 5,7 0,0Z";
+
+    // Leaves
+    let i = 0;
+    for (let d = start + 5; d < end - 4; d += 8, i++) {
+      const [x, y] = pt(d);
+      const out = i % 2 === 0;
+      const rot = d + 90 + (out ? -38 : 38);
+      const scale = 0.85 + ((i * 37) % 10) / 30;
+      const leaf = el("path", {
+        d: leafPath,
+        fill: i % 3 === 0 ? "#98AE84" : "#6E8B5E",
+        transform: `translate(${x.toFixed(1)},${y.toFixed(1)}) rotate(${rot.toFixed(1)}) scale(${scale.toFixed(2)})`
+      });
+      const wrap = el("g", { class: "bloom" });
+      wrap.style.animationDelay = delayFor(d);
+      wrap.appendChild(leaf);
+      g.appendChild(wrap);
+    }
+
+    // Cornflowers
+    const cornflower = (d, off, size) => {
+      const [x, y] = pt(d, r + off);
+      const pos = el("g", { transform: `translate(${x.toFixed(1)},${y.toFixed(1)}) scale(${size})` });
+      const f = el("g", { class: "bloom" });
+      f.style.animationDelay = (parseFloat(delayFor(d)) + 0.15).toFixed(2) + "s";
+      for (let p = 0; p < 8; p++) {
+        f.appendChild(el("path", { d: "M0,-3 C2.5,-6 2.5,-10 0,-12 C-2.5,-10 -2.5,-6 0,-3Z", fill: p % 2 ? "#4F6FA8" : "#6886BD", transform: `rotate(${p * 45})` }));
+      }
+      f.appendChild(el("circle", { r: "3", fill: "#22304A" }));
+      pos.appendChild(f);
+      g.appendChild(pos);
+    };
+    [[150, 4, 1], [205, -6, .8], [262, 6, 1.1], [318, -4, .85], [372, 5, 1], [405, -5, .75]].forEach(a => cornflower(...a));
+
+    // Buttercups
+    const buttercup = (d, off) => {
+      const [x, y] = pt(d, r + off);
+      const pos = el("g", { transform: `translate(${x.toFixed(1)},${y.toFixed(1)})` });
+      const b = el("g", { class: "bloom" });
+      b.style.animationDelay = (parseFloat(delayFor(d)) + 0.2).toFixed(2) + "s";
+      for (let p = 0; p < 5; p++) b.appendChild(el("circle", { cx: (4 * Math.cos(rad(p * 72))).toFixed(2), cy: (4 * Math.sin(rad(p * 72))).toFixed(2), r: "3.2", fill: "#D9B44A" }));
+      b.appendChild(el("circle", { r: "1.8", fill: "#B8902E" }));
+      pos.appendChild(b);
+      g.appendChild(pos);
+    };
+    [[175, -8], [233, 9], [290, -9], [345, 9], [390, -8]].forEach(a => buttercup(...a));
+  })();
+</script>
+</body>
+</html>
