@@ -131,6 +131,15 @@
     font-style: italic;
     color: var(--ink-soft);
   }
+  .note + .note { margin-top: .5rem; }
+  .day-label {
+    text-align: center;
+    font-weight: 500;
+    font-size: 1.45rem;
+    letter-spacing: .02em;
+    margin: 2.5rem 0 .75rem;
+  }
+  .day-label:first-of-type { margin-top: 0; }
 
   /* Schedule */
   .schedule {
@@ -252,22 +261,27 @@
     <div class="details">
       <div>
         <h3>Ceremony</h3>
-        <p class="time">14:00</p>
         <p>St Laurentii Church<br>Storgatan 50, Falkenberg</p>
       </div>
       <div>
         <h3>Celebration</h3>
-        <p class="time">From 15:30</p>
         <p>Ocean Hotel<br>Klittervägen 51, Falkenberg</p>
       </div>
     </div>
 
     <p class="note">Dresscode: Suit</p>
+    <p class="note">Distance between the church and Ocean Hotel: ~2.5km</p>
   </section>
 
   <section class="block" aria-labelledby="schedule-title">
-    <h2 id="schedule-title">How the day unfolds</h2>
+    <h2 id="schedule-title">How the weekend unfolds</h2>
     <!-- EDIT: times and events -->
+    <h3 class="day-label">Friday 28 May</h3>
+    <ol class="schedule">
+      <li><span class="t"></span><span class="dot"></span><span class="what">Dinner at Lilla Napoli<span>We will come back with an exact time</span></span></li>
+    </ol>
+
+    <h3 class="day-label">Saturday 29 May</h3>
     <ol class="schedule">
       <li><span class="t">14:00</span><span class="dot"></span><span class="what">Ceremony at St Laurentii Church<span>Be seated at 13:45</span></span></li>
       <li><span class="t">15:30</span><span class="dot"></span><span class="what">Drinks at Ocean Hotel<span>Bubbles and canapés by the sea</span></span></li>
